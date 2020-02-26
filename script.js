@@ -33,17 +33,21 @@ let score = 0;
 
 //control the snake
 
+let d;
+
 document.addEventListener("keydown",direction);
 
-function draw(event){
-    if(event.keyCode == 37){         
+function direction(event){
+    let key = event.keyCode;
+    if(event.keyCode == 37 && d != "RIGHT"){         
         d = "LEFT";
-        }else if(event.keyCode == 38){
+        }else if(event.keyCode == 38 && d != "DOWN"){
             d = "UP";
-        }else if(event.keyCode == 39){
+        }else if(event.keyCode == 39 && d != "LEFT"){
             d = "RIGHT";
-        }else if(event.keyCode == 40)
+        }else if(event.keyCode == 40 && d != "UP"){
             d = "DOWN";
+    }
 }
 
 // draw everything to the canvas
@@ -61,7 +65,7 @@ function draw() {
     
     ctx.drawImage(foodImg, food.x, food.y);
 
-// Old haed position
+// Old head position
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
     
@@ -76,7 +80,12 @@ function draw() {
     
 //Add new head
     
+    let newHead = {
+        x : snakeX,
+        y : snakeY
+    }
     
+    snake.unshift(newHead);
 
     
     ctx.fillStyle = "white";
