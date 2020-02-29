@@ -4,15 +4,15 @@ const ctx = cvs.getContext("2d");
 //create the unit
 const box = 32;
 
-//load image ground
+//load images
+
 const ground = new Image();
 ground.src = "img/ground.png";
 
-//load image food
 const foodImg = new Image();
 foodImg.src = "img/food.png";
 
-//create snake
+//Create the snake
 
 let snake = [];
 snake[0] = {
@@ -20,14 +20,14 @@ snake[0] = {
     y : 10 * box
 }
 
-//create food
+//create the food
 
 let food = {
-    x : Math.floor(Math.random()*17*1) * box,
-    y : Math.floor(Math.random()*15*3) * box
+    x : Math.floor(Math.random()*17+1) * box,
+    y : Math.floor(Math.random()*15+3) * box
 }
 
-//create the score bar
+//create score var
 
 let score = 0;
 
@@ -39,23 +39,38 @@ document.addEventListener("keydown",direction);
 
 function direction(event){
     let key = event.keyCode;
-    if(event.keyCode == 37 && d != "RIGHT"){         
+    if(key == 37){
         d = "LEFT";
-        }else if(event.keyCode == 38 && d != "DOWN"){
-            d = "UP";
-        }else if(event.keyCode == 39 && d != "LEFT"){
-            d = "RIGHT";
-        }else if(event.keyCode == 40 && d != "UP"){
-            d = "DOWN";
+    }else if(key == 38){
+        d = "UP";
+    }else if(key == 39){
+        d = "RIGHT";
+    }else if(key == 40){
+        d = "DOWN";
     }
-}
+} 
 
+/*---------
+function direction(event){
+    //let key = event.keyCode;
+    if(event.keyCode == 37){
+        d = "LEFT";
+    }else if(event.keyCode == 38){
+        d = "UP";
+    }else if(event.keyCode == 39){
+        d = "RIGHT";
+    }else if(event.keyCode == 40){
+        d = "DOWN";
+    }
+} 
+------------*/
 // draw everything to the canvas
 
-function draw() {
+function draw(){
+    
     ctx.drawImage(ground,0,0);
     
-    for (let i = 0; i < snake.length ; i++){
+    for(let i = 0; i < snake.length ; i++){
         ctx.fillStyle = (i == 0)? "green" : "white";
         ctx.fillRect(snake[i].x,snake[i].y,box,box);
         
@@ -65,20 +80,21 @@ function draw() {
     
     ctx.drawImage(foodImg, food.x, food.y);
 
-// Old head position
+//old head position
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
     
 //remove the tail
+    
     snake.pop();
     
 //which direction
-    if(d = "LEFT") snakeX -= box;
-    if(d = "UP") snakeY -= box;
-    if(d = "RIGHT") snakeX += box;
-    if(d = "DOWN") snakeY += box;
+    if( d = "LEFT") snakeX -= box;
+    if( d = "UP") snakeY -= box;
+    if( d = "RIGHT") snakeX += box;
+    if( d = "DOWN") snakeY += box;
     
-//Add new head
+//Add new Head
     
     let newHead = {
         x : snakeX,
@@ -86,17 +102,30 @@ function draw() {
     }
     
     snake.unshift(newHead);
-
     
     ctx.fillStyle = "white";
     ctx.font = "45px Changa one";
-    ctx.fillText(score, 2*box, 1.6*box);
+    ctx.fillText(score,2*box,1.6*box);
 }
-
 
 //call draw function every 100 ms
 
 let game = setInterval(draw,100);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
